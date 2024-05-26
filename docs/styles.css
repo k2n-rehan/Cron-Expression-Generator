@@ -116,11 +116,11 @@ button:focus {
 }
 
 pre {
-    background: #F8F8F8;
+    background: ##FFFFFF;
     padding: 12.75px;
     border-radius: 4.25px;
     text-align: left;
-    color: #4e88c2;
+    color: #305edb;
     overflow-x: auto;
 }
 
