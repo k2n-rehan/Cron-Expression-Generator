@@ -1,0 +1,154 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #F5F5F5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: #333333;
+    position: relative;
+}
+
+.container {
+    background: white;
+    padding: 17px;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 17px;
+    width: 61.2%;
+    max-width: 918px;
+    justify-content: space-between;
+}
+
+.form-section, .result-section {
+    flex: 1;
+    padding: 17px;
+}
+
+h1, h2 {
+    color: #0d5b4a;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 1.25em;
+    margin-bottom: 17px;
+}
+
+h2 {
+    font-size: 1.275em;
+    margin-bottom: 12.75px;
+}
+
+label {
+    display: block;
+    margin: 8.5px 0 4.25px;
+    font-weight: 500;
+}
+
+input, select {
+    width: 100%;
+    padding: 8.5px;
+    margin-bottom: 12.75px;
+    border: 1px solid #ccc;
+    border-radius: 4.25px;
+    font-size: 0.85em;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #158a6c;
+    color: white;
+    border: none;
+    padding: 10.2px;
+    border-radius: 4.25px;
+    font-size: 0.85em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #0d6d55;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 1.7px rgba(21, 138, 108, 0.5);
+}
+
+#result {
+    margin-top: 17px;
+}
+
+#cron-expression {
+    font-weight: bold;
+    color: #0d5b4a;
+}
+
+#copy-cron-icon {
+    margin-left: 8.5px;
+    cursor: pointer;
+    color: #158a6c;
+    position: relative;
+    display: none;
+}
+
+#copy-cron-icon[data-tooltip]:hover:after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -34px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #0d5b4a;
+    color: #fff;
+    padding: 6.8px 10.2px;
+    border-radius: 4.25px;
+    white-space: nowrap;
+    font-size: 11.9px;
+    font-family: 'Roboto', sans-serif;
+    z-index: 10;
+    opacity: 0.9;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+pre {
+    background: #F8F8F8;
+    padding: 12.75px;
+    border-radius: 4.25px;
+    text-align: left;
+    color: #4e88c2;
+    overflow-x: auto;
+}
+
+.footer {
+    position: absolute;
+    bottom: 8.5px;
+    right: 8.5px;
+    font-size: 0.935em;
+    color: #159977;
+    font-weight: bold;
+}
+
+#interval-container input {
+    width: calc(50% - 6.375px);
+    display: inline-block;
+    margin-right: 12.75px;
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+.radio-group label {
+    margin-right: 150px;
+}

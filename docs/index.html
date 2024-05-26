@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cron Job Expression Generator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/clockpicker/dist/bootstrap-clockpicker.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment-timezone@0.5.34/builds/moment-timezone-with-data.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-section">
+            <h1>Cron Job Expression Generator</h1>
+            <form id="cron-form">
+                <div id="time-container">
+                    <label for="time">Time:</label>
+                    <input type="text" id="time" name="time" placeholder="HH:MM" required>
+                </div>
+
+                <div id="interval-container" style="display:none;">
+                    <label for="hours">Hours:</label>
+                    <input type="number" id="hours" name="hours" placeholder="0" min="0">
+                    <label for="minutes">Minutes:</label>
+                    <input type="number" id="minutes" name="minutes" placeholder="0" min="0">
+                </div>
+
+                <label for="day">Day of Month:</label>
+                <input type="text" id="day" name="day" placeholder="1-31 or *">
+
+                <label for="month">Month:</label>
+                <input type="text" id="month" name="month" placeholder="1-12 or *">
+
+                <label for="weekday">Day of Week:</label>
+                <input type="text" id="weekday" name="weekday" placeholder="0-7 (Sun-Sat) or *">
+
+                <label for="timezone">Time Zone:</label>
+                <select id="timezone" name="timezone">
+                    <option value="UTC">UTC</option>
+                    <option value="Asia/Kolkata">IST</option>
+                    <option value="America/New_York">EST</option>
+                </select>
+
+                <label for="platform">CI/CD Platform:</label>
+                <select id="platform" name="platform">
+                    <option value="github">GitHub Actions</option>
+                    <option value="jenkins">Jenkins</option>
+                    <option value="gitlab">GitLab CI/CD</option>
+                    <option value="azure">Azure Pipelines</option>
+                    <option value="circleci">CircleCI</option>
+                    <option value="argocd">ArgoCD</option>
+                    <option value="travis">Travis CI</option>
+                    <option value="bitbucket">Bitbucket Pipelines</option>
+                    <option value="bamboo">Bamboo</option>
+                </select>
+
+                <button type="button" onclick="generateCron()">Generate Cron Expression</button>
+            </form>
+        </div>
+        <div class="result-section">
+            <h2>Cron Expression: <span id="cron-expression"></span> <i id="copy-cron-icon" class="fas fa-clipboard" onclick="copyCronExpression()" data-tooltip="Copy Cron Expression"></i></h2>
+            <h2>CI/CD Configuration:</h2>
+            <pre id="ci-cd-example"></pre>
+            <button id="copy-button" onclick="copyToClipboard()" style="display: none;">Copy to Clipboard</button>
+
+            <div>
+                <label for="selection">Select Time Type:</label>
+                <div class="radio-group">
+                    <input type="radio" id="specific-time" name="time-type" value="specific-time" checked>
+                    <label for="specific-time">Specific Time</label>
+                    <input type="radio" id="specific-interval" name="time-type" value="specific-interval">
+                    <label for="specific-interval">Specific Interval</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>Created by Rehan Khan</p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
