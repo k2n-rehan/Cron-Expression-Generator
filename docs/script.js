@@ -27,30 +27,30 @@ function generateCron() {
         let minute = minuteStr ? parseInt(minuteStr) : '*';
 
         const day = document.getElementById('day').value || '*';
-    const month = document.getElementById('month').value || '*';
-    const weekday = document.getElementById('weekday').value || '*';
-    const timezone = document.getElementById('timezone').value;
-    const platform = document.getElementById('platform').value;
+        const month = document.getElementById('month').value || '*';
+        const weekday = document.getElementById('weekday').value || '*';
+        const timezone = document.getElementById('timezone').value;
 
-    // Convert hour based on selected time zone
-    if (hour !== '*' && minute !== '*') {
-        switch (timezone) {
-            case 'Asia/Kolkata':
-                const { utcHour, utcMinute } = convertISTtoUTC(hour, minute);
-				hour = utcHour;
-				minute = utcMinute;
-                break;
-            case 'America/New_York':
-                hour = (hour + 5 + 23) % 24;
-                break;
-            case 'UTC':
-            default:
-                // No conversion needed for UTC
-                break;
+        // Convert hour based on selected time zone
+        if (hour !== '*' && minute !== '*') {
+            switch (timezone) {
+                case 'Asia/Kolkata':
+                    const { utcHour, utcMinute } = convertISTtoUTC(hour, minute);
+                    hour = utcHour;
+                    minute = utcMinute;
+                    break;
+                case 'America/New_York':
+                    hour = (hour + 5 + 23) % 24;
+                    break;
+                case 'UTC':
+                default:
+                    // No conversion needed for UTC
+                    break;
+            }
         }
-    }
 
-        cronExpression = `${minute} ${hour} * * *`;
+        // Include the day, month, and weekday values in the cron expression
+        cronExpression = `${minute} ${hour} ${day} ${month} ${weekday}`;
     } else if (timeType === 'specific-interval') {
         const hours = document.getElementById('hours').value || '0';
         const minutes = document.getElementById('minutes').value || '0';
