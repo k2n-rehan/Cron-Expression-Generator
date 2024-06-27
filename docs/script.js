@@ -1,4 +1,120 @@
 $(document).ready(function() {
+    // Default options for start and end time
+    const defaultOptions = [
+        { value: '00', text: '00:00' },
+        { value: '01', text: '01:00' },
+        { value: '02', text: '02:00' },
+        { value: '03', text: '03:00' },
+        { value: '04', text: '04:00' },
+        { value: '05', text: '05:00' },
+        { value: '06', text: '06:00' },
+        { value: '07', text: '07:00' },
+        { value: '08', text: '08:00' },
+        { value: '09', text: '09:00' },
+        { value: '10', text: '10:00' },
+        { value: '11', text: '11:00' },
+        { value: '12', text: '12:00' },
+        { value: '13', text: '13:00' },
+        { value: '14', text: '14:00' },
+        { value: '15', text: '15:00' },
+        { value: '16', text: '16:00' },
+        { value: '17', text: '17:00' },
+        { value: '18', text: '18:00' },
+        { value: '19', text: '19:00' },
+        { value: '20', text: '20:00' },
+        { value: '21', text: '21:00' },
+        { value: '22', text: '22:00' },
+        { value: '23', text: '23:00' }
+    ];
+
+    // IST-specific options for start and end time
+    const istOptions = [
+		{ value: '19', text: '00:30' },
+		{ value: '20', text: '01:30' },
+		{ value: '21', text: '02:30' },
+	    { value: '22', text: '03:30' },
+		{ value: '23', text: '04:30' },
+        { value: '00', text: '05:30' },
+        { value: '01', text: '06:30' },
+        { value: '02', text: '07:30' },
+        { value: '03', text: '08:30' },
+        { value: '04', text: '09:30' },
+        { value: '05', text: '10:30' },
+        { value: '06', text: '11:30' },
+        { value: '07', text: '12:30' },
+        { value: '08', text: '13:30' },
+        { value: '09', text: '14:30' },
+        { value: '10', text: '15:30' },
+        { value: '11', text: '16:30' },
+        { value: '12', text: '17:30' },
+        { value: '13', text: '18:30' },
+        { value: '14', text: '19:30' },
+        { value: '15', text: '20:30' },
+        { value: '16', text: '21:30' },
+        { value: '17', text: '22:30' },
+        { value: '18', text: '23:30' }
+    ];
+	
+	const estOptions = [
+        { value: '04', text: '00:00' },
+        { value: '05', text: '01:00' },
+        { value: '06', text: '02:00' },
+        { value: '07', text: '03:00' },
+        { value: '08', text: '04:00' },
+        { value: '09', text: '05:00' },
+        { value: '10', text: '06:00' },
+        { value: '11', text: '07:00' },
+        { value: '12', text: '08:00' },
+        { value: '13', text: '09:00' },
+        { value: '14', text: '10:00' },
+        { value: '15', text: '11:00' },
+        { value: '16', text: '12:00' },
+        { value: '17', text: '13:00' },
+        { value: '18', text: '14:00' },
+        { value: '19', text: '15:00' },
+        { value: '20', text: '16:00' },
+        { value: '21', text: '17:00' },
+        { value: '22', text: '18:00' },
+        { value: '23', text: '19:00' },
+        { value: '00', text: '20:00' },
+        { value: '01', text: '21:00' },
+        { value: '02', text: '22:00' },
+        { value: '03', text: '23:00' }
+    ];    
+
+    function updateTimeOptions(timeZone) {
+        let options = defaultOptions;
+        if (timeZone === 'Asia/Kolkata') {
+            options = istOptions;
+        }
+		else if (timeZone === 'America/New_York') {
+            options = estOptions;
+        }
+
+        // Update start time drop-down
+        const startTimeSelect = $('#start-time');
+        startTimeSelect.empty();
+        options.forEach(option => {
+            startTimeSelect.append(new Option(option.text, option.value));
+        });
+
+        // Update end time drop-down
+        const endTimeSelect = $('#end-time');
+        endTimeSelect.empty();
+        options.forEach(option => {
+            endTimeSelect.append(new Option(option.text, option.value));
+        });
+    }
+
+    // Bind the change event of the time zone select element
+    $('#timezone').change(function() {
+        const selectedTimeZone = $(this).val();
+        updateTimeOptions(selectedTimeZone);
+    });
+
+    // Initialize with default options
+    updateTimeOptions($('#timezone').val());
+
     $('#time').clockpicker({
         autoclose: true,
         twelvehour: false,
@@ -52,10 +168,24 @@ function generateCron() {
         // Include the day, month, and weekday values in the cron expression
         cronExpression = `${minute} ${hour} ${day} ${month} ${weekday}`;
     } else if (timeType === 'specific-interval') {
+        const day = document.getElementById('day').value || '*';
+        const month = document.getElementById('month').value || '*';
+        const weekday = document.getElementById('weekday').value || '*';
+        
         const hours = document.getElementById('hours').value || '0';
         const minutes = document.getElementById('minutes').value || '0';
+        const startTime = document.getElementById('start-time').value;
+        const endTime = document.getElementById('end-time').value;
         
-        cronExpression = `*/${minutes} */${hours} * * *`;
+        const [startHour, startMinute] = startTime.split(':');
+        const [endHour, endMinute] = endTime.split(':');
+        
+        if (hours > 0) {
+            cronExpression = `${minutes} ${startHour}-${endHour}/${hours} ${day} ${month} ${weekday}`;
+        } 
+		else if (hours == 0) {
+            cronExpression = `${minutes} ${startHour}-${endHour} ${day} ${month} ${weekday}`;
+        }
     }
 
     document.getElementById('cron-expression').innerText = cronExpression;
@@ -110,168 +240,50 @@ job:
     - ./scheduled-task.sh
   only:
     - schedules
-  tags:
-    - cron
-  schedule:
-    cron: "${cronExpression}"
-`;
-            break;
-        case 'azure':
-            ciCdExample = `
-trigger: none
-
-schedules:
-- cron: "${cronExpression}"
-  displayName: Scheduled run
-  branches:
-    include:
-    - main
-
-jobs:
-- job: run_scheduled_task
-  pool:
-    vmImage: 'ubuntu-latest'
-  steps:
-  - checkout: self
-  - script: ./scheduled-task.sh
-`;
-            break;
-        case 'circleci':
-            ciCdExample = `
-version: 2.1
-
-jobs:
-  run_scheduled_task:
-    docker:
-      - image: 'circleci/python:3.8'
-    steps:
-      - checkout
-      - run: ./scheduled-task.sh
-
-workflows:
-  version: 2
-  scheduled_workflow:
-    triggers:
-      - schedule:
-          cron: "${cronExpression}"
-          filters:
-            branches:
-              only:
-                - main
-    jobs:
-      - run_scheduled_task
-`;
-            break;
-        case 'argocd':
-            ciCdExample = `
-apiVersion: argoproj.io/v1alpha1
-kind: CronWorkflow
-metadata:
-  name: scheduled-task
-spec:
-  schedule: "${cronExpression}"
-  workflowSpec:
-    entrypoint: main
-    templates:
-    - name: main
-      container:
-        image: alpine:3.7
-        command: [sh, -c]
-        args: ["./scheduled-task.sh"]
-`;
-            break;
-        case 'travis':
-            ciCdExample = `
-jobs:
-  include:
-    - stage: Scheduled Job
-      script: ./scheduled-task.sh
-      if: branch = main AND type = cron
-      cron: "${cronExpression}"
-`;
-            break;
-        case 'bitbucket':
-            ciCdExample = `
-pipelines:
-  custom:
-    scheduled:
-      - step:
-          name: Scheduled Task
-          script:
-            - ./scheduled-task.sh
-          cron: "${cronExpression}"
-`;
-            break;
-        case 'bamboo':
-            ciCdExample = `
----
-version: 2
-stages:
-  - Stage 1:
-      jobs:
-        - Run scheduled task:
-            tasks:
-              - script:
-                  - ./scheduled-task.sh
-triggers:
-  - cron: '${cronExpression}'
 `;
             break;
         default:
-            ciCdExample = 'Unknown platform';
+            ciCdExample = 'Unsupported platform selected.';
+            break;
     }
 
     document.getElementById('ci-cd-example').innerText = ciCdExample;
-    document.getElementById('copy-button').style.display = 'inline'; // Show the copy button
+    document.getElementById('copy-button').style.display = 'block'; // Show the copy button
 }
 
 function copyCronExpression() {
     const cronExpression = document.getElementById('cron-expression').innerText;
-    const tempInput = document.createElement('textarea');
+    const tempInput = document.createElement('input');
     tempInput.value = cronExpression;
     document.body.appendChild(tempInput);
     tempInput.select();
     document.execCommand('copy');
     document.body.removeChild(tempInput);
-    alert('Cron Expression copied to clipboard!');
+    alert('Cron expression copied to clipboard');
 }
 
 function copyToClipboard() {
-    const copyText = document.getElementById('ci-cd-example').innerText;
+    const ciCdExample = document.getElementById('ci-cd-example').innerText;
     const tempInput = document.createElement('textarea');
-    tempInput.value = copyText;
+    tempInput.value = ciCdExample;
     document.body.appendChild(tempInput);
     tempInput.select();
     document.execCommand('copy');
     document.body.removeChild(tempInput);
-    alert('CI/CD Configuration copied to clipboard!');
+    alert('CI/CD configuration copied to clipboard');
 }
 
-function convertISTtoUTC(hour, minute, subtractHour = 5, subtractMinute = 30) {
-  // Handle negative minutes
-  if (minute < subtractMinute) {
-    minute += 60;
-    hour--;
-  }
+function convertISTtoUTC(hour, minute) {
+    let utcHour = hour - 5;
+    let utcMinute = minute - 30;
 
-  // Subtract minutes
-  let utcMinute = minute - subtractMinute;
+    if (utcMinute < 0) {
+        utcMinute += 60;
+        utcHour -= 1;
+    }
+    if (utcHour < 0) {
+        utcHour += 24;
+    }
 
-  // Handle negative hours (borrow from hours)
-  if (hour < subtractHour) {
-    hour += 24;
-  }
-
-  // Subtract hours
-  let utcHour = hour - subtractHour;
-
-  // Handle negative result (ensure positive time)
-  if (utcHour < 0) {
-    utcHour += 24; // Add a day if result goes negative
-  }
-  if (utcMinute < 0) {
-    utcMinute += 60; // Add an hour if result minutes are negative
-  }
-
-  return { utcHour, utcMinute };
+    return { utcHour, utcMinute };
 }
