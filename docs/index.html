@@ -18,6 +18,13 @@
         <div class="form-section">
             <h1>Cron Job Expression Generator</h1>
             <form id="cron-form">
+                <label for="timezone">Time Zone:</label>
+                <select id="timezone" name="timezone">
+                    <option value="UTC">UTC</option>
+                    <option value="Asia/Kolkata">IST</option>
+                    <option value="America/New_York">EST</option>
+                </select>
+
                 <div id="time-container">
                     <label for="time">Time:</label>
                     <input type="text" id="time" name="time" placeholder="HH:MM" required>
@@ -92,13 +99,6 @@
 
                 <label for="weekday">Day of Week:</label>
                 <input type="text" id="weekday" name="weekday" placeholder="0-7 (Sun-Sat) or *">
-
-                <label for="timezone">Time Zone:</label>
-                <select id="timezone" name="timezone">
-                    <option value="UTC">UTC</option>
-                    <option value="Asia/Kolkata">IST</option>
-                    <option value="America/New_York">EST</option>
-                </select>
 
                 <label for="platform">CI/CD Platform:</label>
                 <select id="platform" name="platform">
