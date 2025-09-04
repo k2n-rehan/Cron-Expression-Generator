@@ -116,12 +116,19 @@ button:focus {
 }
 
 pre {
-    background: ##FFFFFF;
+    background: #FFFFFF;
     padding: 12.75px;
     border-radius: 4.25px;
     text-align: left;
     color: #305edb;
     overflow-x: auto;
+}
+
+#cron-error {
+    color: #d32f2f;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: none;
 }
 
 .footer {
