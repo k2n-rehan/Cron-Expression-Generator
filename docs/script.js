@@ -1,7 +1,7 @@
 $(document).ready(function() {
     // Default options for start and end time
     const defaultOptions = [
-        { value: '00', text: '00:00' },
+        { value: '0', text: '00:00' },
         { value: '1', text: '01:00' },
         { value: '2', text: '02:00' },
         { value: '3', text: '03:00' },
