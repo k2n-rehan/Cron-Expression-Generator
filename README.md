@@ -31,27 +31,35 @@ To run this project locally, follow these steps:
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/k2n-rehan/Cron-Expression-Generator.git
-   
-2. Navigate to the project directory:
+   ```
+
+2. **Navigate to the project directory:**
    ```bash
    cd Cron-Expression-Generator
+   ```
 
-4. Open index.html in your web browser:
-   ```bash
-   open index.html
+3. **Open the project in your browser:**
+   - If you are on Windows, double-click `docs/index.html` to open it in your default browser.
+   - On macOS or Linux, you can use:
+     ```bash
+     open docs/index.html
+     # or
+     xdg-open docs/index.html
+     ```
    
 ## Usage
 1. Enter the desired time and timezone.
 2. Select the day, month, and weekday (if applicable).
 3. Choose the CI/CD platform from the dropdown.
-4. Click the "Generate" button to create the cron expression and CI/CD configuration.
-5. Use the clipboard icons to copy the generated cron expression and CI/CD configuration to your clipboard.
+4. Select either "Specific Time" or "Specific Interval" for scheduling.
+5. Click the "Generate Cron Expression" button to create the cron expression and CI/CD configuration.
+6. Use the clipboard icons to copy the generated cron expression and CI/CD configuration to your clipboard.
    
 ## Contributing
 Contributions are welcome! Please fork the repository and create a pull request with your changes.
 
 ## Contact
-For any questions or suggestions, please contact k8s.rehan@gmail.com.
+For any questions or suggestions, please contact [k8s.rehan@gmail.com](mailto:k8s.rehan@gmail.com).
 
 ## Acknowledgments
 
